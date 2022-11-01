@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  Notes.Api: Notes.Api.Test/Notes.Api.Test.csproj
+  NOTES_API: Notes.Api.Test/Notes.Api.Test.csproj
 
 jobs:
   build-test:
@@ -22,10 +22,10 @@ jobs:
         run: dotnet --version
 
       - name: "Restore"
-        run: dotnet restore $Notes.Api
+        run: dotnet restore $NOTES_API
 
       - name: "Build"
-        run: dotnet build --no-restore --configuration Release $Notes.Api
+        run: dotnet build --no-restore --configuration Release $NOTES_API
 
       - name: "Test"
-        run: dotnet test --no-build --configuration Release --verbosity normal --logger trx $Notes.Api
+        run: dotnet test --no-build --configuration Release --verbosity normal --logger trx $NOTES_API
