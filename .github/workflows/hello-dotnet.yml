@@ -5,6 +5,7 @@ on:
 
 env:
   NOTES_API: Notes.Api.Test/Notes.Api.Test.csproj
+  TEST_RESULT: Notes.Api.Test/TestResults/*.trx
 
 jobs:
   build-test:
@@ -29,3 +30,11 @@ jobs:
 
       - name: "Test"
         run: dotnet test --no-build --configuration Release --verbosity normal --logger trx $NOTES_API
+
+      - name: "Report"
+        uses: dorny/test-reporter@v1.6.0
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: JEST Tests            # Name of the check run which will be created
+          path: reports/jest-*.xml    # Path to test results
+          reporter: jest-junit        # Format of test results
